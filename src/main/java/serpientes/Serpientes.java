@@ -1,5 +1,6 @@
 package serpientes;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Serpientes {
@@ -27,11 +28,15 @@ public class Serpientes {
 	// Indicamos el número de mediciones de temperatura realizadas
 	// Debe estar entre 1 y 100.
 	public static int medicionesTemperatura() {
-		int mediciones = 0;
+		int mediciones = -1;
 		do {
 			System.out.println("Introduzca el numero de mediciones " 
 					+ "realizadas (este número debe ser 1 ≤ n ≤ 100)");
-			mediciones = s.nextInt();
+			try {
+				mediciones = s.nextInt();
+			}catch (InputMismatchException ime) {
+				s.nextLine();
+			}
 		} while (mediciones < 0 || mediciones > 101);
 		return mediciones;
 	}
@@ -40,9 +45,16 @@ public class Serpientes {
 	// umbral que una serpiente es capaz de soportar entre dos mediciones
 	// con temperatura alta.
 	public static int medicionesConsecutivas() {
-		System.out.println("Introduzca el número de mediciones consecutivas" 
-				+ " por debajo del umbral (k): ");
-		int k = s.nextInt();
+		int k = -1;
+		do {
+			System.out.println("Introduzca el número de mediciones consecutivas" 
+					+ " por debajo del umbral (k): ");
+			try {
+				k = s.nextInt();
+			}catch (InputMismatchException ime) {
+				s.nextLine();
+			}
+		}while(k == -1);
 		return k;
 	}
 
@@ -51,10 +63,14 @@ public class Serpientes {
 	// 1 en caso de estar por encima.
 	public static int[] medidas(int longitud) {
 		int[] temperatura = new int[longitud];
-		int posible; // Usado para comprobar si el valor añadido es 1 ó 0.
+		int posible = -1; // Usado para comprobar si el valor añadido es 1 ó 0.
 		System.out.println("Introduzca las " + longitud + " mediciones:");
 		for (int i = 0; i < longitud; i++) {
-			posible = s.nextInt();
+			try {
+				posible = s.nextInt();
+			}catch (InputMismatchException ime) {
+				s.nextLine();
+			}
 			if (posible != 0 && posible != 1) {
 				System.out.println("El valor añadido no es válido.\n" 
 						+ "Recuerde meter valores 1 ó 0");
@@ -128,7 +144,7 @@ public class Serpientes {
 						+ " Resultado:" + (ceros == k));
 				*/
 				if ((ceros <= k) && (longitudOptima <= longitudPosible)) {
-					System.out.println("ENTRO AQUÍ ");
+					//System.out.println("ENTRO AQUÍ ");
 					longitudOptima = longitudPosible;
 					comienzoMedicion = posibleComienzo;
 				} else {
